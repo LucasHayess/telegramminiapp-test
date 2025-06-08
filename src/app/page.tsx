@@ -2,8 +2,15 @@
 
 import { useEffect, useState } from "react";
 
+interface TelegramUser {
+  id: number;
+  first_name: string;
+  last_name?: string;
+  username?: string;
+}
+
 export default function Home() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<TelegramUser | null>(null);
 
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
@@ -12,7 +19,7 @@ export default function Home() {
     tg.ready(); // 通知 Telegram 页面已加载
     tg.expand(); // 可选，自动展开 WebApp 窗口
 
-    setUser(tg.initDataUnsafe?.user);
+    setUser(tg.initDataUnsafe?.user ?? null);
   }, []);
 
   return (
